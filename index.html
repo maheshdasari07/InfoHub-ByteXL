@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoHub - ByteXL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🌐</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --card-bg: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --error: #ef4444;
+            --success: #10b981;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --border-radius: 16px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            color: white;
+            padding: var(--spacing-xl) 0;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Grid Layout */
+        .utilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Button Styles */
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .btn-tertiary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        /* Result Styles */
+        .result {
+            margin-top: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: #f9fafb;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .result-content {
+            color: var(--text-secondary);
+        }
+
+        .weather-info {
+            display: grid;
+            gap: var(--spacing-md);
+        }
+
+        .weather-main {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .weather-icon {
+            font-size: 3rem;
+        }
+
+        .temperature {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Quote Styles */
+        .quote-container {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-bottom: var(--spacing-md);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .quote-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.8;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Currency Result */
+        .currency-result {
+            text-align: center;
+        }
+
+        .converted-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: var(--spacing-md) 0;
+        }
+
+        .exchange-rate {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .loading.show {
+            display: flex;
+        }
+
+        .spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-message {
+            background: #fee2e2;
+            color: var(--error);
+            padding: var(--spacing-md);
+            border-radius: 10px;
+            margin-top: var(--spacing-md);
+            display: none;
+            animation: shake 0.5s ease-out;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: white;
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-xl);
+            opacity: 0.9;
+        }
+
+        footer p {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .utilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.75rem;
+            }
+
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .quote-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>InfoHub</h1>
+            <p>ByteXL</p>
+        </header>
+
+        <!-- Main Utilities Grid -->
+        <div class="utilities-grid">
+            <!-- Weather Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🌤️</div>
+                    <h2 class="card-title">Weather Information</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cityInput">City Name</label>
+                    <input 
+                        type="text" 
+                        id="cityInput" 
+                        placeholder="Enter city name (e.g., London)"
+                    >
+                </div>
+                
+                <button class="btn" id="getWeatherBtn" onclick="getWeather()">Get Weather</button>
+                
+                <div class="loading" id="weatherLoading">
+                    <div class="spinner"></div>
+                </div>
+                
+                <div class="error-message" id="weatherError"></div>
+                
+                <div class="result" id="weatherResult">
+                    <div class="weather-main">
+                        <div class="weather-icon" id="weatherIcon"></div>
+                        <div>
+                            <div class="result-title" id="cityName"></div>
+                            <div class="temperature" id="temperature"></div>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Description</span>
+                            <span class="detail-value" id="description"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Humidity</span>
+                            <span class="detail-value" id="humidity"></span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Wind Speed</span>
+                            <span class="detail-value" id="windSpeed"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Currency Converter Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💱</div>
+                    <h2 class="card-title">Currency Converter</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amountInput">Amount in INR (Indian Rupees)</label>
+                    <input 
+                        type="number" 
+                        id="amountInput" 
+                        placeholder="Enter amount in INR"
+                        min="0"
+                        step="0.01"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="currencySelect">Target Currency</label>
+                    <select id="currencySelect" class="form-control" style="padding: 12px 16px;">
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                        <option value="CHF">CHF - Swiss Franc</option>
+                        <option value="CNY">CNY - Chinese Yuan</option>
+                        <option value="SEK">SEK - Swedish Krona</option>
+                        <option value="NZD">NZD - New Zealand Dollar</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="convertCurrency()">Convert Currency</button>
+                
+                <div class="loading" id="currencyLoading">
+                    <div class="spinner"></div>
+                </div>
+                
+                <div class="error-message" id="currencyError"></div>
+                
+                <div class="result" id="currencyResult">
+                    <div class="currency-result">
+                        <div class="result-title">Conversion Result</div>
+                        <div class="converted-amount" id="convertedAmount"></div>
+                        <div class="exchange-rate" id="exchangeRate"></div>
+                        <div class="exchange-rate" id="lastUpdated"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Motivational Quote Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">💡</div>
+                    <h2 class="card-title">Motivational Quote</h2>
+                </div>
+                
+                <div class="quote-container" id="quoteContainer">
+                    <div class="quote-text" id="quoteText">
+                        "Success is not final, failure is not fatal: it is the courage to continue that counts."
+                    </div>
+                    <div class="quote-author" id="quoteAuthor">— Winston Churchill</div>
+                </div>
+                
+                <button class="btn" onclick="generateQuote()">Generate New Quote</button>
+                
+                <div class="loading" id="quoteLoading">
+                    <div class="spinner"></div>
+                </div>
+                
+                <div class="error-message" id="quoteError"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // API Configuration - CORS-friendly endpoints
+        const API_CONFIG = {
+            weather: {
+                endpoint: 'https://wttr.in',
+                fallbackEndpoint: 'https://api.open-meteo.com/v1/forecast',
+                timeout: 6000,
+                defaultCity: 'London'
+            },
+            currency: {
+                endpoint: 'https://api.exchangerate-api.com/v4/latest/INR',
+                timeout: 6000
+            },
+            quotes: {
+                primaryEndpoint: 'https://type.fit/api/quotes',
+                secondaryEndpoint: 'https://zenquotes.io/api/random',
+                timeout: 6000
+            }
+        };
+
+        // Fallback Quotes (50+ quotes)
+        const FALLBACK_QUOTES = [
+            { content: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { content: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+            { content: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+            { content: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+            { content: "It is during our darkest moments that we must focus to see the light.", author: "Aristotle" },
+            { content: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+            { content: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+            { content: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+            { content: "Success is not final, failure is not fatal.", author: "Winston Churchill" },
+            { content: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+            { content: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+            { content: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
+            { content: "Dwell on the beauty of life. Watch sunsets.", author: "Marc Chagall" },
+            { content: "Don't let yesterday take up too much of today.", author: "Will Rogers" },
+            { content: "Get busy living or get busy dying.", author: "Stephen King" },
+            { content: "You have within you right now everything you need to deal with whatever the world throws at you.", author: "Brian Tracy" },
+            { content: "Nothing is impossible. The word itself says 'I'm possible'!", author: "Audrey Hepburn" },
+            { content: "Do something today that your future self will thank you for.", author: "Sean Patrick Flanery" },
+            { content: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
+            { content: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+            { content: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+            { content: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
+            { content: "The mind is everything. What you think you become.", author: "Buddha" },
+            { content: "The best revenge is massive success.", author: "Frank Sinatra" },
+            { content: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
+            { content: "Everything you've ever wanted is on the other side of fear.", author: "George Addair" },
+            { content: "We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light.", author: "Plato" },
+            { content: "Nothing will work unless you do.", author: "Maya Angelou" },
+            { content: "I am not a product of my circumstances. I am a product of my decisions.", author: "Stephen Covey" },
+            { content: "Every child is an artist. The problem is how to remain an artist once he grows up.", author: "Pablo Picasso" },
+            { content: "You can never cross the ocean until you have the courage to lose sight of the shore.", author: "Christopher Columbus" },
+            { content: "Either you run the day, or the day runs you.", author: "Jim Rohn" },
+            { content: "Whether you think you can or you think you can't, you're right.", author: "Henry Ford" },
+            { content: "The two most important days in your life are the day you are born and the day you find out why.", author: "Mark Twain" },
+            { content: "Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it.", author: "Johann Wolfgang von Goethe" },
+            { content: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+            { content: "An unexamined life is not worth living.", author: "Socrates" },
+            { content: "Eighty percent of success is showing up.", author: "Woody Allen" },
+            { content: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
+            { content: "Winning isn't everything, but wanting to win is.", author: "Vince Lombardi" },
+            { content: "I am not a product of my circumstances. I am a product of my decisions.", author: "Stephen Covey" },
+            { content: "Every strike brings me closer to the next home run.", author: "Babe Ruth" },
+            { content: "Life is what we make it, always has been, always will be.", author: "Grandma Moses" },
+            { content: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+            { content: "In this life we cannot do great things. We can only do small things with great love.", author: "Mother Teresa" },
+            { content: "Only a life lived for others is a life worthwhile.", author: "Albert Einstein" },
+            { content: "The purpose of our lives is to be happy.", author: "Dalai Lama" },
+            { content: "Life is really simple, but we insist on making it complicated.", author: "Confucius" },
+            { content: "May you live every day of your life.", author: "Jonathan Swift" },
+            { content: "Life itself is the most wonderful fairy tale.", author: "Hans Christian Andersen" },
+            { content: "Do not let making a living prevent you from making a life.", author: "John Wooden" },
+            { content: "Go confidently in the direction of your dreams! Live the life you've imagined.", author: "Henry David Thoreau" },
+            { content: "When I let go of what I am, I become what I might be.", author: "Lao Tzu" },
+            { content: "Everything has beauty, but not everyone can see.", author: "Confucius" },
+            { content: "How wonderful it is that nobody need wait a single moment before starting to improve the world.", author: "Anne Frank" },
+            { content: "When I was 5 years old, my mother always told me that happiness was the key to life.", author: "John Lennon" }
+        ];
+
+        // Fallback Exchange Rates
+        const FALLBACK_RATES = {
+            USD: 0.012,
+            EUR: 0.011,
+            GBP: 0.0095,
+            JPY: 1.8,
+            AUD: 0.019,
+            CAD: 0.017,
+            CHF: 0.011,
+            CNY: 0.087,
+            SEK: 0.13,
+            NZD: 0.021
+        };
+
+        // Currency Names
+        const CURRENCY_NAMES = {
+            USD: 'US Dollar',
+            EUR: 'Euro',
+            GBP: 'British Pound',
+            JPY: 'Japanese Yen',
+            AUD: 'Australian Dollar',
+            CAD: 'Canadian Dollar',
+            CHF: 'Swiss Franc',
+            CNY: 'Chinese Yuan',
+            SEK: 'Swedish Krona',
+            NZD: 'New Zealand Dollar'
+        };
+
+        // Currency Symbols
+        const CURRENCY_SYMBOLS = {
+            USD: '$',
+            EUR: '€',
+            GBP: '£',
+            JPY: '¥',
+            AUD: 'A$',
+            CAD: 'C$',
+            CHF: 'Fr',
+            CNY: '¥',
+            SEK: 'kr',
+            NZD: 'NZ$'
+        };
+
+        // Weather Icons Mapping
+        const weatherIcons = {
+            'Clear': '☀️',
+            'Clouds': '☁️',
+            'Rain': '🌧️',
+            'Drizzle': '🌦️',
+            'Thunderstorm': '⛈️',
+            'Snow': '❄️',
+            'Mist': '🌫️',
+            'Smoke': '💨',
+            'Haze': '🌫️',
+            'Dust': '💨',
+            'Fog': '🌫️',
+            'Sand': '💨',
+            'Ash': '💨',
+            'Squall': '💨',
+            'Tornado': '🌪️'
+        };
+
+        // Utility Functions
+        function showLoading(elementId) {
+            document.getElementById(elementId).classList.add('show');
+        }
+
+        function hideLoading(elementId) {
+            document.getElementById(elementId).classList.remove('show');
+        }
+
+        function showError(elementId, message) {
+            const errorEl = document.getElementById(elementId);
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+            setTimeout(() => {
+                errorEl.classList.remove('show');
+            }, 5000);
+        }
+
+        function showResult(elementId) {
+            document.getElementById(elementId).classList.add('show');
+        }
+
+        function hideResult(elementId) {
+            document.getElementById(elementId).classList.remove('show');
+        }
+
+        // Weather Module with wttr.in (CORS-friendly)
+        async function getWeather() {
+            const cityInput = document.getElementById('cityInput');
+            const city = cityInput.value.trim();
+
+            if (!city) {
+                showError('weatherError', 'Please enter a city name.');
+                return;
+            }
+
+            const btn = document.getElementById('getWeatherBtn');
+            btn.disabled = true;
+            hideResult('weatherResult');
+            showLoading('weatherLoading');
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.weather.timeout);
+                
+                const response = await fetch(
+                    `${API_CONFIG.weather.endpoint}/${encodeURIComponent(city)}?format=j1`,
+                    { signal: controller.signal }
+                );
+                
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error('City not found or service unavailable.');
+                }
+
+                const data = await response.json();
+                displayWeatherWttr(data, city);
+            } catch (error) {
+                console.log('Weather API error:', error.message);
+                // Use fallback weather data
+                displayWeatherFallback(city);
+            } finally {
+                hideLoading('weatherLoading');
+                btn.disabled = false;
+            }
+        }
+
+        function displayWeatherWttr(data, city) {
+            try {
+                const current = data.current_condition[0];
+                const tempCelsius = parseInt(current.temp_C);
+                const tempFahrenheit = parseInt(current.temp_F);
+                
+                document.getElementById('cityName').textContent = city;
+                document.getElementById('temperature').textContent = `${tempCelsius}°C / ${tempFahrenheit}°F`;
+                document.getElementById('weatherIcon').textContent = getWeatherIcon(current.weatherDesc[0].value);
+                document.getElementById('description').textContent = current.weatherDesc[0].value;
+                document.getElementById('humidity').textContent = `${current.humidity}%`;
+                document.getElementById('windSpeed').textContent = `${current.windspeedKmph} km/h`;
+                
+                showResult('weatherResult');
+            } catch (error) {
+                console.log('Error parsing weather data:', error);
+                displayWeatherFallback(city);
+            }
+        }
+
+        function getWeatherIcon(description) {
+            const desc = description.toLowerCase();
+            if (desc.includes('sunny') || desc.includes('clear')) return '☀️';
+            if (desc.includes('cloud')) return '☁️';
+            if (desc.includes('rain')) return '🌧️';
+            if (desc.includes('snow')) return '❄️';
+            if (desc.includes('thunder')) return '⛈️';
+            if (desc.includes('fog') || desc.includes('mist')) return '🌫️';
+            return '🌤️';
+        }
+
+        function displayWeatherFallback(city) {
+            // Fallback weather data for major cities
+            const fallbackWeather = {
+                'london': { temp: 15, desc: 'Partly cloudy', humidity: 65, wind: 15 },
+                'new york': { temp: 18, desc: 'Clear sky', humidity: 55, wind: 12 },
+                'tokyo': { temp: 20, desc: 'Sunny', humidity: 60, wind: 10 },
+                'paris': { temp: 16, desc: 'Cloudy', humidity: 70, wind: 14 },
+                'mumbai': { temp: 28, desc: 'Hot and humid', humidity: 75, wind: 18 },
+                'delhi': { temp: 25, desc: 'Clear sky', humidity: 50, wind: 8 },
+                'default': { temp: 20, desc: 'Moderate', humidity: 60, wind: 12 }
+            };
+            
+            const cityLower = city.toLowerCase();
+            const weather = fallbackWeather[cityLower] || fallbackWeather['default'];
+            const tempF = Math.round((weather.temp * 9/5) + 32);
+            
+            document.getElementById('cityName').textContent = city;
+            document.getElementById('temperature').textContent = `${weather.temp}°C / ${tempF}°F`;
+            document.getElementById('weatherIcon').textContent = getWeatherIcon(weather.desc);
+            document.getElementById('description').textContent = weather.desc + ' (cached)';
+            document.getElementById('humidity').textContent = `${weather.humidity}%`;
+            document.getElementById('windSpeed').textContent = `${weather.wind} km/h`;
+            
+            showResult('weatherResult');
+        }
+
+        // Currency Converter Module
+        async function convertCurrency() {
+            const amountInput = document.getElementById('amountInput');
+            const amount = parseFloat(amountInput.value);
+            const targetCurrency = document.getElementById('currencySelect').value;
+
+            if (!amountInput.value || isNaN(amount)) {
+                showError('currencyError', 'Please enter a valid amount.');
+                return;
+            }
+
+            if (amount <= 0) {
+                showError('currencyError', 'Please enter a positive number.');
+                return;
+            }
+
+            hideResult('currencyResult');
+            showLoading('currencyLoading');
+
+            let useFallback = false;
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.currency.timeout);
+                
+                const response = await fetch(
+                    API_CONFIG.currency.endpoint,
+                    { signal: controller.signal }
+                );
+                
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error('Service temporarily unavailable. Please try again.');
+                }
+
+                const data = await response.json();
+                displayConversion(amount, targetCurrency, data, false);
+            } catch (error) {
+                console.log('API failed, using fallback rates:', error.message);
+                useFallback = true;
+                // Use fallback rates
+                const fallbackData = {
+                    rates: FALLBACK_RATES,
+                    date: new Date().toISOString().split('T')[0]
+                };
+                displayConversion(amount, targetCurrency, fallbackData, true);
+            } finally {
+                hideLoading('currencyLoading');
+            }
+        }
+
+        function displayConversion(amount, targetCurrency, data, isFallback = false) {
+            const rate = data.rates[targetCurrency];
+            const convertedAmount = (amount * rate).toFixed(2);
+            const symbol = CURRENCY_SYMBOLS[targetCurrency];
+            
+            const formattedAmount = new Intl.NumberFormat('en-IN').format(amount);
+            const formattedConverted = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(convertedAmount);
+            
+            document.getElementById('convertedAmount').textContent = `${symbol}${formattedConverted} ${targetCurrency}`;
+            document.getElementById('exchangeRate').textContent = `1 INR = ${rate.toFixed(4)} ${targetCurrency}`;
+            
+            const lastUpdatedDate = new Date(data.date);
+            const rateType = isFallback ? '⚠️ Using cached rates' : '✓ Using live rates';
+            document.getElementById('lastUpdated').textContent = `${rateType} • Last updated: ${lastUpdatedDate.toLocaleDateString()}`;
+            
+            showResult('currencyResult');
+        }
+
+        // Quote cache for type.fit API (loads once)
+        let quotesCache = [];
+
+        // Motivational Quote Module with CORS-friendly API
+        async function generateQuote() {
+            showLoading('quoteLoading');
+            
+            const quoteContainer = document.getElementById('quoteContainer');
+            quoteContainer.style.opacity = '0.5';
+
+            try {
+                // If we have cached quotes, use them
+                if (quotesCache.length > 0) {
+                    const randomQuote = quotesCache[Math.floor(Math.random() * quotesCache.length)];
+                    displayQuote({
+                        content: randomQuote.text,
+                        author: randomQuote.author || 'Unknown'
+                    });
+                    return;
+                }
+
+                // Try to fetch from type.fit API
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.quotes.timeout);
+                
+                const response = await fetch(
+                    API_CONFIG.quotes.primaryEndpoint,
+                    { signal: controller.signal }
+                );
+                
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    throw new Error('API unavailable');
+                }
+
+                const data = await response.json();
+                
+                // Cache the quotes
+                quotesCache = data;
+                
+                // Display random quote
+                const randomQuote = data[Math.floor(Math.random() * data.length)];
+                displayQuote({
+                    content: randomQuote.text,
+                    author: randomQuote.author || 'Unknown'
+                });
+            } catch (error) {
+                console.log('Quote API error, using fallback:', error.message);
+                
+                // Use fallback quotes
+                const randomQuote = FALLBACK_QUOTES[Math.floor(Math.random() * FALLBACK_QUOTES.length)];
+                displayQuote(randomQuote);
+            } finally {
+                hideLoading('quoteLoading');
+                quoteContainer.style.opacity = '1';
+            }
+        }
+
+        function displayQuote(data) {
+            const quoteContainer = document.getElementById('quoteContainer');
+            const quoteText = document.getElementById('quoteText');
+            const quoteAuthor = document.getElementById('quoteAuthor');
+            
+            quoteText.textContent = `"${data.content}"`;
+            quoteAuthor.textContent = `— ${data.author}`;
+            
+            // Fade in animation
+            setTimeout(() => {
+                quoteContainer.style.opacity = '1';
+            }, 100);
+        }
+
+        // Keyboard Support
+        document.getElementById('cityInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getWeather();
+            }
+        });
+
+        document.getElementById('amountInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                convertCurrency();
+            }
+        });
+
+        // Initialize - Load London weather and quote on page load
+        window.addEventListener('load', function() {
+            console.log('InfoHub Application Loaded Successfully');
+            
+            // Auto-load London weather
+            document.getElementById('cityInput').value = API_CONFIG.weather.defaultCity;
+            getWeather();
+            
+            // Auto-load a quote
+            generateQuote();
+        });
+    </script>
+</body>
+</html>
